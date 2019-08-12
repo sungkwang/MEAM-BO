@@ -90,6 +90,6 @@ will not be affected.
 
 
 ## References
-[1] Mun, S.; Bowman, A. L.; Nouranian, S.; Gwaltney, S. R.; Baskes, M. I.; Horstemeyer, M. F. Interatomic Potential for Hydrocarbons on the Basis of the Modified Embedded-Atom Method with Bond Order (MEAM-BO). J. Phys. Chem. A 2017. https://doi.org/10.1021/acs.jpca.6b11343.
+[1] Mun, S.; Bowman, A. L.; Nouranian, S.; Gwaltney, S. R.; Baskes, M. I.; Horstemeyer, M. F. Interatomic Potential for Hydrocarbons on the Basis of the Modified Embedded-Atom Method with Bond Order (MEAM-BO). J. Phys. Chem. A 2017. https://doi.org/10.1021/acs.jpca.6b11343.  
 [2] Dickel, D.; Gwaltney, S. R.; Mun, S.; Baskes, M. I.; Horstemeyer, M. F. A Dispersion-Corrected Modified Embedded-Atom Method Bond Order Interatomic Potential for Sulfur. The Journal of Physical Chemistry A 2018. https://doi.org/10.1021/acs.jpca.8b07410.
 
