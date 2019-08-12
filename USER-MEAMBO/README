@@ -1,0 +1,77 @@
+This package implements the MEAMBO potential as a LAMMPS pair style.
+
+==============================================================================
+
+This package is a revision of the MEAM/C package to add bond order effect.
+
+Revisions by Sungkwang Mun, Ricolindo L Carino, and Michael Baskes
+ {sungkwan,carino}@CAVS.MSState.Edu, baskes@bagley.msstate.edu
+ Center for Advanced Vehicular Systems
+ Mississippi State University, MS 39762
+
+The MEAM/C package is a translation by 
+ Sebastian Hütter, sebastian.huetter@ovgu.de
+ Institute of Materials and Joining Technology
+ Otto-von-Guericke University Magdeburg, Germany
+
+The original MEAM Fortran implementation was created by
+  Greg Wagner (while at Sandia, now at Northwestern U).
+
+==============================================================================
+
+Use "make yes-user-meambo" to enable this package when building LAMMPS.
+
+In your LAMMPS input script, specify
+  pair_style meambo
+  pair_coeff * * parameter_1 el1 ... parameter_2 el1 ... bond_parameter_2
+to enable the use of this implementation. The library and parameter files used
+with pair_style meam/c are usable by pair_style meambo; however, the following
+keyword=value lines, for example, are necessary for bond order calculation:
+    ntypBC=1 		   // number of elements that have unsaturated bonds
+	rcutBC(1)=3.3      // cutoff radius for 1st element for bond order calculation 
+	rcutBC(2)=2.4      // cutoff radius for 2nd element for bond order calculation 
+	vdW_form = 1       // selection parameter for form of vdW function
+					   // 0: no vdW effect, 1: 9-6 Lenard Jones equation
+	evdW_96LJ(1)=0.435 // epsilon (energy) parameter for 1st element in 9-6 LJ
+	evdW_96LJ(2)=0     // epsilon (energy) parameter for 2nd element in 9-6 LJ 
+	svdW_96LJ(1)=3.01  // sigma (distance) paramters for 1st element in 9-6 LJ 
+	svdW_96LJ(2)=0     // sigma (distance) paramters for 2nd element in 9-6 LJ
+
+  pair_coeff * * parameter_1 el1 ... parameter_2 el1 ... NULL
+will execute the original MEAM calculation without bond order calculation 
+so that the results will be exactly the same as those of meam/c.
+
+Other differences compared with meam/c
+1. New reference structures are added.
+	a. ch4: methane-like structure only for binary system.
+	b. dia3: diamond structure with primary 1NN and secondary 3NN inteation
+    c. tri: H2O-like structure that has an angle
+	e. zig: zigzag structure with a uniform angle 
+    d. lin: linear structure (180 degree angle)
+2. tri, zig, and lin reference structures require angle information (in degree) 
+such as the following.
+   theta = 109.5
+   
+Future plan
+1. Another method for vdW interaction will be added, i.e. DFT-D3 function
+2. Equation will be slightly modified to treat different kinds of unsaturated 
+bonds such as C-O and N-O. However, the results with the same bond parameter 
+will not be affected.
+ 
+The bond file contains the bond information, for example:
+
+Hydrocarbon
+==============================================================================
+# elti   eltj   bond    Z(0)   Z(1)   beta0    beta1    beta2   beta3   p0     p1     p2     p3
+# double bond: aeb2_0(1:3), aeb2_1(1:3), aeb2_2(1:3), are3(1:3)
+# triple bond: eb3(1:3), re3
+
+'C'     'C'      2       3     0     5       1       4.5     1.2     1       1       1       1.2     
+-1.296    -4.618    -14.21   
+-0.632    -4.462    21.841   
+0.299     -5.452    55.653   
+1.3396    -0.0959   0.0364    
+
+'C'     'C'      3       2     0     5       5       4.5     0.46    1       1       1       1       
+-3.647          -3.03           -13.003         1.203           
+==============================================================================
