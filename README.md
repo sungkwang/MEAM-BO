@@ -15,7 +15,7 @@ The challenge in the current MEAM formalism is a lack of capability to distingui
 
 ![MEAM-BO equation](MEAM-BO_equation.png)
 
-where E_MEAM is the energy from the original MEAM formalism, f_Ibond is a function that gives fractional energy with respect to the bond I, E_bond is the increment of energy due to the bond saturation, and R_I is the bond length between two atoms. It should be noted that E_2 deals with the double bond and the bond order less than two such as graphene and benzene. See Ref. [1] for the detail.
+where E<sub>MEAM</sub> is the energy from the original MEAM formalism, f<sub>Ibond</sub> is a function that gives fractional energy with respect to the bond I, E<sub>bond</sub> is the increment of energy due to the bond saturation, and R<sub>I</sub> is the bond length between two atoms. It should be noted that E<sub>2</sub> deals with the double bond and the bond order less than two such as graphene and benzene. See Ref. [1] for the detail.
 
  
 ## Installation
@@ -26,8 +26,10 @@ where E_MEAM is the energy from the original MEAM formalism, f_Ibond is a functi
 ## How to use
 In your LAMMPS input script, specify  
 
-  `pair_style meambo`  
-  `pair_coeff * * parameter_1 el1 ... parameter_2 el1 ... bond_order_parameter_2`  
+```
+  pair_style meambo
+  pair_coeff * * parameter_1 el1 ... parameter_2 el1 ... bond_order_parameter_2
+```
   
 to enable the use of this implementation. The parameter files used with 
 pair_style meam/c are usable by pair_style meambo; however, the following
@@ -48,7 +50,9 @@ svdW_96LJ(2)=0     // sigma (distance) paramters for 2nd element in 9-6 LJ
 
 Replacing the bond order file name with NULL such as the following 
 
-`pair_coeff * * parameter_1 el1 ... parameter_2 el1 ... NULL`  
+```
+pair_coeff * * parameter_1 el1 ... parameter_2 el1 ... NULL
+```
 
 will execute the original MEAM calculation without the bond order calculation 
 so that the results will be exactly the same as those of meam/c.
