@@ -28,7 +28,7 @@ In your LAMMPS input script, specify
 
 ```
   pair_style meambo
-  pair_coeff * * parameter_1 el1 ... parameter_2 el1 ... bond_order_parameter_2
+  pair_coeff * * parameter_1 el1 ... parameter_2 el1 ... bond_order_parameter
 ```
   
 to enable the use of this implementation. The parameter files used with 
