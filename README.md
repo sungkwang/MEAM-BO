@@ -77,13 +77,15 @@ The bond file contains the bond information, for example:
 
 ## Other differences compared with meam/c package
 1. New reference structures are added  
-  a. ch4: methane-like structure only for binary system  
-  b. dia3: diamond structure with primary 1NN and secondary 3NN inteation  
-  c. tri: H2O-like structure that has an angle  
-	e. zig: zigzag structure with a uniform angle   
-  d. lin: linear structure (180 degree angle)  
-2. tri, zig, and lin reference structures require angle information (in degree) in the paramter_2 file such as the following.  
-`theta = 109.5`
+  a. `ch4`: methane-like structure only for binary system  
+  b. `dia3`: diamond structure with primary 1NN and secondary 3NN inteation  
+  c. `tri`: H2O-like structure that has an angle  
+  e. `zig`: zigzag structure with a uniform angle   
+  d. `lin`: linear structure (180 degree angle)  
+2. `tri`, `zig`, and `lin` reference structures require angle information (in degree) in the paramter_2 file such as the following.  
+```
+theta = 109.5
+```
 
 ## Future plan
 1. Performance optimization
