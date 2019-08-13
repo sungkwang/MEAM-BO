@@ -42,10 +42,10 @@ rcutBC(1)=3.3      // cutoff radius for 1st element for bond order calculation
 rcutBC(2)=2.4      // cutoff radius for 2nd element for bond order calculation 
 vdW_form = 1       // selection parameter for form of vdW function
                    // 0: no vdW effect, 1: 9-6 Lenard Jones equation
-evdW_96LJ(1)=0.435 // epsilon (energy) parameter for 1st element in 9-6 LJ
-evdW_96LJ(2)=0     // epsilon (energy) parameter for 2nd element in 9-6 LJ 
-svdW_96LJ(1)=3.01  // sigma (distance) parameters for 1st element in 9-6 LJ 
-svdW_96LJ(2)=0     // sigma (distance) parameters for 2nd element in 9-6 LJ
+evdW_96LJ(1)=0.435 // epsilon (energy in eV) parameter for 1st element in 9-6 LJ
+evdW_96LJ(2)=0     // epsilon (energy in eV) parameter for 2nd element in 9-6 LJ 
+svdW_96LJ(1)=3.01  // sigma (distance in Angstrom) parameters for 1st element in 9-6 LJ 
+svdW_96LJ(2)=0     // sigma (distance in Angstrom) parameters for 2nd element in 9-6 LJ
 ```
 
 Replacing the bond order file name with NULL such as the following 
@@ -75,7 +75,7 @@ The bond parameter file for hydrocarbon is shown below.
 ```
 The first line consists of bond information applicable to double or triple bonds. `elt_i1` and `elt_i2` are element names of unsaturated bonds that must match with the element names in parameter_1 file. `bond` 2 or 3 to represent a double or a triple bond, respectively. `Z(0)` and `Z(1)` are the number of neighbors required for the Z0 and Z1 counting factor function to satisfy the geometrical condition, e.g. `Z(0)` for triple bond (acetylene) is 2 (two neighbors). `beta0/1/3` and `p0/1/3` are parameters for the Gaussian-like delta function. `beta2` and `p2` are parameters to correct the rotational barriers. 
 
-The parameters in the next lines are determined by the value of `bond`. If 2 (double bond), then additional 12 parameters must follow. If 3 (triple bond), then additional 4 parameters must follow. `e3` values are triple bond parameters to fit the difference of energy between MEAM and FP calculation as a function of distance. `re3` is an experimental distance at the equilibrium for a reference structure for a triple bond, e.g. acetylene for hydrocarbon. `e2a_0/1/2` and `re2a` are auxiliary parameters that will result in `e2` and `re2` values similar to the triple bond case. 
+The parameters in the next lines are determined by the value of `bond`. If 2 (double bond), then additional 12 parameters must follow. If 3 (triple bond), then additional 4 parameters must follow. `e3` values are triple bond parameters to fit the difference of energy between MEAM and first principle (FP) calculation as a function of distance. `re3` is an experimental distance at the equilibrium for a reference structure for a triple bond, e.g. acetylene for hydrocarbon. `e2a_0/1/2` and `re2a` are auxiliary parameters that will result in `e2` and `re2` values similar to the triple bond case. 
 
 ## Other differences compared with meam/c package
 1. New reference structures are added  
