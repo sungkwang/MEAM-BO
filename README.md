@@ -2,7 +2,7 @@
 Modified Embedded Atom Method with Bond Order (MEAM-BO) implementation in LAMMPS
 
 This package implements the MEAM-BO force field as a LAMMPS pair style based on 
-the MEAM/C (5Jun2019 version) package where bond order calculations are added. 
+the MEAM/C (https://lammps.sandia.gov/doc/pair_meamc.html, 5Jun2019 version) package where bond order calculations are added. 
 
 Implementation by Sungkwang Mun, Ricolindo L Carino, and Michael Baskes  
  sungkwan@cavs.msstate.edu, carino@cavs.msstate.edu, baskes@bagley.msstate.edu  
