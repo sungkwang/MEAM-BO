@@ -9,7 +9,7 @@ Implementation by Sungkwang Mun, Ricolindo L Carino, and Michael Baskes
  Center for Advanced Vehicular Systems  
  Mississippi State University, MS 39762  
  
-## Thoery
+## Theory
 
 The challenge in the current MEAM formalism is a lack of capability to distinguish bond order in different materials, such as acetylene (bond order: 3), ethylene (2), graphene (4/3) and benzene (3/2). To solve this issue, additional energy terms are added to the original MEAM energy as follows.
 
@@ -34,7 +34,7 @@ In your LAMMPS input script, specify
 to enable the use of this implementation. The parameter files used with 
 pair_style meam/c are usable by pair_style meambo; however, the following
 keyword=value lines, for example (CH binary system), should be added to 
-paramter_2 file for the bond order calculation (as well as van der Waals interaction ):  
+parameter_2 file for the bond order calculation (as well as van der Waals interaction ):  
 
 ```
 ntypBC=1           // number of elements that have unsaturated bonds
@@ -44,8 +44,8 @@ vdW_form = 1       // selection parameter for form of vdW function
                    // 0: no vdW effect, 1: 9-6 Lenard Jones equation
 evdW_96LJ(1)=0.435 // epsilon (energy) parameter for 1st element in 9-6 LJ
 evdW_96LJ(2)=0     // epsilon (energy) parameter for 2nd element in 9-6 LJ 
-svdW_96LJ(1)=3.01  // sigma (distance) paramters for 1st element in 9-6 LJ 
-svdW_96LJ(2)=0     // sigma (distance) paramters for 2nd element in 9-6 LJ
+svdW_96LJ(1)=3.01  // sigma (distance) parameters for 1st element in 9-6 LJ 
+svdW_96LJ(2)=0     // sigma (distance) parameters for 2nd element in 9-6 LJ
 ```
 
 Replacing the bond order file name with NULL such as the following 
@@ -57,8 +57,8 @@ pair_coeff * * parameter_1 el1 ... parameter_2 el1 ... NULL
 will execute the original MEAM calculation without the bond order calculation 
 so that the results will be exactly the same as those of meam/c.
 
-## Bond order paramter example
-The bond file contains the bond information, for example:
+## Bond order parameter example
+The bond parameter file for hydrocarbon is shown below. 
 ```
 # elt_i1   elt_i2   bond    Z(0)   Z(1)   beta0    beta1    beta2   beta3   p0     p1     p2     p3
 # double bond: e2a_0(1:3), e2a_1(1:3), e2a_2(1:3), re2a(1:3)
@@ -73,16 +73,16 @@ The bond file contains the bond information, for example:
 'C'     'C'      3       2     0     5       5       4.5     0.46    1       1       1       1       
 -3.647          -3.03           -13.003         1.203           
 ```
-
+`elt_i1` and `elt_i2` are the element names that must match with the element names in parameter_1 file. `bond` 2 or 3 to represent double or triple bond, respectively. Z(0) and Z(1) are the number of neighbors that requires for Z0 and Z1 function, e.g. Z(0) for triple bond (acetylene) is 2. beta0/1/3 and p0/1/3 are the parameters for the Gaussian-like delta function. beta2 and p2 are the parameters 
 
 ## Other differences compared with meam/c package
 1. New reference structures are added  
   a. `ch4`: methane-like structure only for binary system  
-  b. `dia3`: diamond structure with primary 1NN and secondary 3NN inteation  
+  b. `dia3`: diamond structure with primary 1NN and secondary 3NN interation  
   c. `tri`: H2O-like structure that has an angle  
   e. `zig`: zigzag structure with a uniform angle   
   d. `lin`: linear structure (180 degree angle)  
-2. `tri`, `zig`, and `lin` reference structures require angle information (in degree) in the paramter_2 file such as the following.  
+2. `tri`, `zig`, and `lin` reference structures require angle information (in degree) in the parameter_2 file such as the following.  
 ```
 theta = 109.5
 ```
