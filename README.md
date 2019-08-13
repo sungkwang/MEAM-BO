@@ -62,7 +62,7 @@ The bond parameter file for hydrocarbon is shown below.
 ```
 # elt_i1   elt_i2   bond    Z(0)   Z(1)   beta0    beta1    beta2   beta3   p0     p1     p2     p3
 # double bond: e2a_0(1:3), e2a_1(1:3), e2a_2(1:3), re2a(1:3)
-# triple bond: eb3(1:3), re3
+# triple bond: e3(1:3), re3
 
 'C'     'C'      2       3     0     5       1       4.5     1.2     1       1       1       1.2     
 -1.296    -4.618    -14.21   
@@ -73,7 +73,9 @@ The bond parameter file for hydrocarbon is shown below.
 'C'     'C'      3       2     0     5       5       4.5     0.46    1       1       1       1       
 -3.647          -3.03           -13.003         1.203           
 ```
-`elt_i1` and `elt_i2` are the element names that must match with the element names in parameter_1 file. `bond` 2 or 3 to represent double or triple bond, respectively. Z(0) and Z(1) are the number of neighbors that requires for Z0 and Z1 function, e.g. Z(0) for triple bond (acetylene) is 2. beta0/1/3 and p0/1/3 are the parameters for the Gaussian-like delta function. beta2 and p2 are the parameters 
+The first line consists of bond information that applicable to double or triple bond. `elt_i1` and `elt_i2` are element names of unsaturated bond that must match with the element names in parameter_1 file. `bond` 2 or 3 to represent double or triple bond, respectively. Z(0) and Z(1) are the number of neighbors that requires for Z0 and Z1 counting factor function, e.g. Z(0) for triple bond (acetylene) is 2. `beta0/1/3` and `p0/1/3` are parameters for the Gaussian-like delta function. `beta2` and `p2` are parameters to correct the rotational barriers. 
+
+The parameters in the next lines are determined by the value of `bond`. If 2 (double bond), then additional 12 parameters must follow. If 3 (triple bond), then additional 4 parameter must follow. 'e3' are triple bond parameters to fit the difference of energy between MEAM and FP calculation as a function of distance. `re3` is a experimental distance at equilibrium for reference structure for triple bond, e.g. acetylene for hydrocarbon. `e2a_0/1/2` and 're2a' are auxilary parameters that will become 'e2' and 're2' parameter similar to the triple bond case. 
 
 ## Other differences compared with meam/c package
 1. New reference structures are added  
