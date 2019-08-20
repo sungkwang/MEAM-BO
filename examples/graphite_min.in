@@ -1,0 +1,27 @@
+units metal
+boundary p p p
+atom_style atomic
+read_data graphite.dat
+
+pair_style meambo
+pair_coeff * * meamf_CH_Mun_2017.txt C H meafile_CH_Mun_2017.txt C H meambc_CH_Mun_2017.txt
+
+neigh_modify binsize 0.3
+
+variable pepa equal pe/atoms 
+compute pepa all pe/atom 
+
+compute stpa all stress/atom NULL 
+
+thermo 100000
+thermo_style custom step pe v_pepa press vol
+thermo_modify format 3 %24.16f
+
+dump coord all custom 100000 graphite.dump id element xu yu zu fx fy fz c_pepa
+dump_modify coord format line "%3d %s %12.8f %12.8f %12.8f %24.16f %24.16f %24.16f %24.16f"
+dump_modify coord sort id element C H
+
+fix id_relax all box/relax x 0 y 0 z 0 couple xy vmax 0.001
+
+minimize 1e-10 1e-10 5000 10000
+
