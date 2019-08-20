@@ -699,9 +699,8 @@ void PairMEAMBO::read_files(char *globalfile, char *userfile, char *BCfile)
     if (comm->me == 0) {
       fp = force->open_potential(BCfile);
       if (fp == NULL) {
-        char str[128];
-        sprintf(str,"Cannot open MEAMBO BCfile %s",BCfile);
-        error->one(FLERR,str);
+        fclose(fp);
+        error->one(FLERR, "Cannot open MEAMBO BCfile. To run original MEAM, set NULL");
       }
     }
 
