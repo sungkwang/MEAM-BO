@@ -7,7 +7,14 @@ the MEAM/C (https://lammps.sandia.gov/doc/pair_meamc.html, 5Jun2019 version) pac
 Implementation by Sungkwang Mun, Ricolindo L Carino, and Michael Baskes  
  sungkwan@cavs.msstate.edu, carino@cavs.msstate.edu, baskes@bagley.msstate.edu  
  Center for Advanced Vehicular Systems  
- Mississippi State University, MS 39762  
+ Mississippi State University, MS 39762 
+
+Contributors:  
+Andrew Bowman, US Army Corps of Engineers - ERDC  
+Doyl Dickel, Mississippi State University  
+Mark Horstemeyer, Liberty University  
+Sasan Nouranian, University of Mississippi  
+Steven Gwaltney, Mississippi State University  
  
 ## Theory
 
