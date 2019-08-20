@@ -1,3 +1,6 @@
+# After the minimization, the distance between A-B graphene sheets will become 
+# 3.35 Angstrom, which is an experimental value.
+
 units metal
 boundary p p p
 atom_style atomic
