@@ -789,7 +789,7 @@ MEAMBO::meambo_get_bond(int* type, int* fmap, int inum, int* ilist,
       if (tag[i] > tag[j]) continue;
 
       Sij = scrfcn_full[fnoffset+jn]*fcpair_full[fnoffset+jn];
-      if (Sij <= 0.5) continue;
+      if (iszero(Sij)) continue;
 
       // if C-C bond
       for (nt = 0; nt < this->ntypBC_meambo; nt++) {
