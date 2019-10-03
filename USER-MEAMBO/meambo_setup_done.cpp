@@ -213,8 +213,6 @@ MEAMBO::compute_pair_meam(void)
         // (see Lee and Baskes, PRB 62(13):8564 eqn.(21))
         if (this->nn2_meam[a][b] == 1) {
           Z1 = get_Zij(this->lattce_meam[a][b]);
-          // Z2 = get_Zij2(this->lattce_meam[a][b], this->Cmin_meam[a][a][b],
-                   // this->Cmax_meam[a][a][b], arat, scrn);
           Z2 = get_Zij2(this->lattce_meam[a][b], this->Cmin_meam[a][a][b],
                    this->Cmax_meam[a][a][b], this->stheta_meam[a][b], arat, scrn);      
                    
@@ -229,46 +227,49 @@ MEAMBO::compute_pair_meam(void)
             //               phi_aa
             phiaa = phi_meam(rarat, a, a);
             Z1 = get_Zij(this->lattce_meam[a][a]);
-            // Z2 = get_Zij2(this->lattce_meam[a][a], this->Cmin_meam[a][a][a],
-                     // this->Cmax_meam[a][a][a], arat, scrn);
             Z2 = get_Zij2(this->lattce_meam[a][a], this->Cmin_meam[a][a][a],
-                     this->Cmax_meam[a][a][a], this->stheta_meam[a][b], arat, scrn);
+                     this->Cmax_meam[a][a][a], this->stheta_meam[a][a], arat, scrn);
 
             if (scrn > 0.0) {
               nmax = 10;              
+              b2nn = -Z2*scrn/Z1;
               for (n = 1; n <= nmax; n++) {
-                phiaa += MathSpecial::powint((-Z2 * scrn / Z1), n) 
-                        * phi_meam(rarat * MathSpecial::powint(arat, n), a, a);
-              }
+                phi_val = MathSpecial::powint(b2nn,n)*phi_meam(rarat * MathSpecial::powint(arat, n), a, a);
+                if (fabs(phi_val) > 1e-10 ){
+                  phiaa += phi_val;
+                } else {
+                  break; // this is necessary to avoid nan value in some cases (3NN dia)
+                }
+              }              
             }
 
             //               phi_bb
             phibb = phi_meam(rarat, b, b);
             Z1 = get_Zij(this->lattce_meam[b][b]);
-            // Z2 = get_Zij2(this->lattce_meam[b][b], this->Cmin_meam[b][b][b],
-                     // this->Cmax_meam[b][b][b], arat, scrn);
             Z2 = get_Zij2(this->lattce_meam[b][b], this->Cmin_meam[b][b][b],
-                     this->Cmax_meam[b][b][b], this->stheta_meam[a][b], arat, scrn);
+                     this->Cmax_meam[b][b][b], this->stheta_meam[b][b], arat, scrn);
 
             if (scrn > 0.0) {
               nmax = 10;              
+              b2nn = -Z2*scrn/Z1;
               for (n = 1; n <= nmax; n++) {
-                phibb += MathSpecial::powint((-Z2 * scrn / Z1), n) 
-                        * phi_meam(rarat * MathSpecial::powint(arat, n), b, b);
-              }
+                phi_val = MathSpecial::powint(b2nn,n)*phi_meam(rarat * MathSpecial::powint(arat, n), b, b);
+                if (fabs(phi_val) > 1e-10 ){
+                  phibb += phi_val;
+                } else {
+                  break; // this is necessary to avoid nan value in some cases (3NN dia)
+                }
+              }               
+              
             }
             
             if (this->lattce_meam[a][b] == B1 || this->lattce_meam[a][b] == B2 ||
                 this->lattce_meam[a][b] == DIA) {
               //     Add contributions to the B1 or B2 potential
               Z1 = get_Zij(this->lattce_meam[a][b]);
-              // Z2 = get_Zij2(this->lattce_meam[a][b], this->Cmin_meam[a][a][b],
-                       // this->Cmax_meam[a][a][b], arat, scrn);
               Z2 = get_Zij2(this->lattce_meam[a][b], this->Cmin_meam[a][a][b],
                        this->Cmax_meam[a][a][b], this->stheta_meam[a][b],  arat, scrn);
               this->phir[nv2][j] = this->phir[nv2][j] - Z2 * scrn / (2 * Z1) * phiaa;
-              // Z2 = get_Zij2(this->lattce_meam[a][b], this->Cmin_meam[b][b][a],
-                       // this->Cmax_meam[b][b][a], arat, scrn2);
               Z2 = get_Zij2(this->lattce_meam[a][b], this->Cmin_meam[b][b][a],
                        this->Cmax_meam[b][b][a], this->stheta_meam[a][b], arat, scrn2);
 
@@ -300,7 +301,7 @@ MEAMBO::compute_pair_meam(void)
               b2nn = -Z2*scrn/Z1;
               for (n = 1; n <= nmax; n++) {
                 phi_val = MathSpecial::powint(b2nn,n)*phi_meam(r * MathSpecial::powint(arat, n), a, b);
-                if (fabs(phi_val) > 1e-20 ){
+                if (fabs(phi_val) > 1e-10 ){
                   this->phir[nv2][j] += phi_val;
                 } else {
                   break; // this is necessary to avoid nan value in rapid decrease of the values
@@ -606,8 +607,6 @@ MEAMBO::compute_reference_density(void)
     //     add on the contribution from those (accounting for partial
     //     screening)
     if (this->nn2_meam[a][a] == 1) {
-      // Z2 = get_Zij2(this->lattce_meam[a][a], this->Cmin_meam[a][a][a],
-               // this->Cmax_meam[a][a][a], arat, scrn);
       Z2 = get_Zij2(this->lattce_meam[a][a], this->Cmin_meam[a][a][a],
                this->Cmax_meam[a][a][a], this->stheta_meam[a][a], arat, scrn);
       rho0_2nn = this->rho0_meam[a] * MathSpecial::fm_exp(-this->beta0_meam[a] * (arat - 1));
@@ -827,7 +826,6 @@ MEAMBO::get_densref(double r, int a, int b, double* rho01, double* rho11, double
 
   if (this->nn2_meam[a][b] == 1) {
 
-    // Zij2nn = get_Zij2(lat, this->Cmin_meam[a][a][b], this->Cmax_meam[a][a][b], arat, scrn);
     Zij2nn = get_Zij2(lat, this->Cmin_meam[a][a][b], this->Cmax_meam[a][a][b], 
                       this->stheta_meam[a][b], arat, scrn);
 
@@ -856,7 +854,6 @@ MEAMBO::get_densref(double r, int a, int b, double* rho01, double* rho11, double
       *rho01 = *rho01 + Zij2nn * scrn * rhoa01nn;
 
       //     Assume Zij2nn and arat don't depend on order, but scrn might
-      // Zij2nn = get_Zij2(lat, this->Cmin_meam[b][b][a], this->Cmax_meam[b][b][a], arat, scrn);
       Zij2nn = get_Zij2(lat, this->Cmin_meam[b][b][a], this->Cmax_meam[b][b][a], 
                         this->stheta_meam[a][b], arat, scrn);
       *rho02 = *rho02 + Zij2nn * scrn * rhoa02nn;
